@@ -6,8 +6,13 @@ from docx import Document
 import PyPDF2
 from PyPDF2 import PdfReader
 from io import BytesIO
+import streamlit as st
 
-genai.configure(api_key="AIzaSyDBeqBcjHBzI7eM1asVq0PaQL9Cpn2O-7I")
+
+# Access your secret API key
+ak = st.secrets["genai"]["api_key"]
+
+genai.configure(api_key=ak)
 
 
 for m in genai.list_models():
