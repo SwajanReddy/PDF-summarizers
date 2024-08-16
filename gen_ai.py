@@ -57,11 +57,12 @@ def get_contents_white_paper(chat,section,model):
         prompt = f'''when giving response  just give the text, The output instructions are dont include any headers like
         'Introduction' or 'Abstract', just give me text. Now give me content for section {heading}  '''
         # Get the rewritten text from the chat
-
+      
         rewritten_content = get_chat_response(chat, prompt)
         sections[heading] = rewritten_content
         print(model.count_tokens(chat.history))
         print(f"done content for:{heading}")
+        st.write(f"done content for:{heading}")
         print(rewritten_content[:50])
 
     msg = "if you feel like any other major headings and content are missing for our white paper summary, generate them."
@@ -129,7 +130,6 @@ def init_model_paper_wise(topic, sections, raw_texts):
     print(r.text)
     x = get_contents(chat, raw_texts, model)
 
-
     output_path = 'paper_wise_summary.docx'
     doc= create_new_document(x, output_path)
     doc_stream = BytesIO()
@@ -163,7 +163,7 @@ def init_model_white_paper(topic, sections, pdf_texts):
     msg = '''Ok, I think i feeded you the entrire content, did you get it? just give me confirmation. if you have info,
     Now we will generate my white paper summary, i will specifically ask you to generate each section content like introduction, etc, ok?'''
     r = chat.send_message(msg)
-    print("r.text")
+  
     x = get_contents_white_paper(chat,sections,model)
 
     output_path = 'white_paper_summary.docx'
