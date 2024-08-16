@@ -86,8 +86,8 @@ def generate_paper_wise_summary():
         if st.button("Submit Sections"):
             st.session_state.user_prompt = user_input
             st.write("Prompt submitted successfully!")
-            st.write("User's submitted text:")
-            st.write(st.session_state.user_prompt)
+            #st.write("User's submitted text:")
+            #st.write(st.session_state.user_prompt)
 
             # Initialize progress bar
             with st.spinner('Generating paper-wise summaries...'):
@@ -116,7 +116,7 @@ def generate_white_paper_summary():
     if 'raw_texts' in st.session_state:
         
         user_input = st.text_area(
-            "Literature Review Prompt",
+            "Sections of the White paper summary",
             value='''
             Abstract
             Introduction
