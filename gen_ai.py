@@ -7,7 +7,7 @@ import PyPDF2
 from PyPDF2 import PdfReader
 from io import BytesIO
 import streamlit as st
-
+import time
 
 # Access your secret API key
 ak = st.secrets["genai"]["api_key"]
@@ -52,19 +52,20 @@ def get_contents(chat, raw_texts, model):
 def get_contents_white_paper(chat,section,model):
     sections = {}
     n=1
-    #section = ["Abstrct","Introduction","Excecutive summary","Methodologies", "Implementation ideas of VR in reduction of perspective minority bias", "Implications", "Specific minority groups studied","Beniffts of VR in this matter", "Limitations","ethical considerations and theoritical framework" , "Conclusion"]
+    
     for heading in section:
         prompt = f'''when giving response  just give the text, The output instructions are dont include any headers like
         'Introduction' or 'Abstract', just give me text. Now give me content for section {heading}  '''
         # Get the rewritten text from the chat
-      
+        if n%4==0:
+          time.sleep(60)
         rewritten_content = get_chat_response(chat, prompt)
         sections[heading] = rewritten_content
         print(model.count_tokens(chat.history))
         print(f"done content for:{heading}")
         st.write(f"done content for:{heading}")
         print(rewritten_content[:50])
-
+        n = n+1
     msg = "if you feel like any other major headings and content are missing for our white paper summary, generate them."
     rewritten_content = get_chat_response(chat, msg)
     sections["extra"] = rewritten_content
